@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Alerts{% endblock %}
+{% block content %}
+
+<div class="card">
+    <h2>Detection History</h2>
+    {% if alerts %}
+        <table>
+            <thead>
+                <tr><th>#</th><th>Timestamp</th><th>Name</th><th>Confidence</th><th>Camera</th><th>Type</th></tr>
+            </thead>
+            <tbody>
+                {% for row in alerts %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[5] }}</td>
+                        <td>{{ row[1] }}</td>
+                        <td>{{ '%.0f%%' | format(row[2] * 100) if row[2] else '--' }}</td>
+                        <td>{{ row[3] }}</td>
+                        <td>
+                            {% if row[6] %}
+                                <span class="badge badge-match">MATCH</span>
+                            {% else %}
+                                <span class="badge badge-unknown">UNKNOWN</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No alerts recorded yet.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

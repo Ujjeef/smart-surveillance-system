@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Known Faces{% endblock %}
+{% block content %}
+
+<div class="card">
+    <h2>Registered Known Faces</h2>
+    {% if faces %}
+        <table>
+            <thead>
+                <tr><th>ID</th><th>Name</th><th>Photo</th><th>Registered On</th></tr>
+            </thead>
+            <tbody>
+                {% for face in faces %}
+                    <tr>
+                        <td>{{ face.id }}</td>
+                        <td>{{ face.name }}</td>
+                        <td>
+                            {% if face.image_path and face.image_path != '' %}
+                                <img src="/snapshot/{{ face.id }}" width="70" height="70" style="border-radius:4px; object-fit:cover;">
+                            {% else %}
+                                No photo
+                            {% endif %}
+                        </td>
+                        <td>{{ face.added_date }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No known faces registered yet. Run <code>python3 -m src.register_faces</code> first.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
